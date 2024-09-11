@@ -36,10 +36,10 @@ public class BinaryTree<V> {
 		}
 		LinkedList<V> newvalue = currentnode.value;
 		if (newvalue==null) {
+			currentnode.key = keyi.clone();
 			newvalue = new LinkedList<V>();
 		}
 		newvalue.add(valuei);
-		currentnode.key = keyi.clone();
 		currentnode.value = newvalue;
 	}
 	
