@@ -5,27 +5,27 @@ import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class TreeMapSort {
 	public static void main(String[] args) {
 		int[] checksort = {12}; //13 /12
-		int[] unsorted = {5, 1, 13, 4, 11, 2, 14, 7};
-		/*
+		//int[] unsorted = {5, 1, 13, 4, 11, 2, 14, 7};
+		int[] unsorted = {5, 1, 13, 4, 11, 2, 14, 7, 230, 150, 254, 80, 46, 65, 255, 65534, 65570, 144858484, 947738383};
 		Random rand = new Random();
-		int randnum = 10000000;
+		int randnum = 1000000; //10000000
 		unsorted = new int[randnum];
 		for (int i=0;i<randnum;i++) {
-			unsorted[i] = rand.nextInt();
+			unsorted[i] = rand.nextInt(0, Integer.MAX_VALUE);
 		}
-		*/
 		int[] systemsort = Arrays.copyOf(unsorted, unsorted.length);
 		long systemstart = System.currentTimeMillis();
 		Arrays.sort(systemsort);
 		long systemend = System.currentTimeMillis();
 		long systemdelta = systemend - systemstart;
-		System.out.print("systemdelta="+systemdelta+"ms:");
+		System.out.print("systemsrdelta="+systemdelta+"ms:");
 		for (int i=0;i<systemsort.length;i++) {
-			System.out.print(" "+systemsort[i]);
+			//System.out.print(" "+systemsort[i]);
 		}
 		System.out.println();
 		long treesortstart = System.currentTimeMillis();
@@ -64,17 +64,19 @@ public class TreeMapSort {
 		for (Iterator<byte[]> e=treekeys.iterator();e.hasNext();) {
 			ByteBuffer treekeybytes = ByteBuffer.wrap(e.next());
 			treekeybytes.order(ByteOrder.LITTLE_ENDIAN);
-			System.out.print(" "+treekeybytes.getInt());
+			Integer treekeyint = treekeybytes.getInt();
+			//System.out.print(" "+treekeyint);
 		}
 		System.out.println();
 		long treegetvaluesstart = System.currentTimeMillis();
 		LinkedList<Integer> treevalues = treesort.getValues();
 		long treegetvaluesend = System.currentTimeMillis();
 		long treegetvaluesdelta = treegetvaluesend - treegetvaluesstart;
-		System.out.print("treegetvaluesdelta="+treegetvaluesdelta+"ms:");
+		System.out.print("treegetvdelta="+treegetvaluesdelta+"ms:");
 		for (Iterator<Integer> e=treevalues.iterator();e.hasNext();) {
-			System.out.print(" "+e.next());
+			//System.out.print(" "+e.next());
 		}
+		System.out.println();
 	}
 
 }
