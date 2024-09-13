@@ -75,8 +75,7 @@ public class BinaryTree<V> {
 		LinkedList<BinaryTreeNode> dfsearch = new LinkedList<BinaryTreeNode>();
 		dfsearch.add(this.rootnode);
 		while (dfsearch.size()>0) {
-			BinaryTreeNode dfsearchnode = dfsearch.getFirst();
-			dfsearch.removeFirst();
+			BinaryTreeNode dfsearchnode = dfsearch.removeFirst();
 			if (dfsearchnode.value!=null) {
 				for (int i=0;i<dfsearchnode.value.size();i++) {
 					newkeys.add(dfsearchnode.key);
@@ -97,8 +96,7 @@ public class BinaryTree<V> {
 		LinkedList<BinaryTreeNode> dfsearch = new LinkedList<BinaryTreeNode>();
 		dfsearch.add(this.rootnode);
 		while (dfsearch.size()>0) {
-			BinaryTreeNode dfsearchnode = dfsearch.getFirst();
-			dfsearch.removeFirst();
+			BinaryTreeNode dfsearchnode = dfsearch.removeFirst();
 			if (dfsearchnode.value!=null) {
 				newkeys.addAll(dfsearchnode.value);
 			}

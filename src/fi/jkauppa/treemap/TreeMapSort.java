@@ -9,16 +9,16 @@ import java.util.Random;
 
 public class TreeMapSort {
 	public static void main(String[] args) {
-		int[] checksort = {12}; //13 /12
-		//int[] unsorted = {5, 1, 13, 4, 11, 2, 14, 7};
-		int[] unsorted = {5, 1, 13, 4, 11, 2, 14, 7, 230, 150, 254, 80, 46, 65, 255, 65534, 65570, 144858484, 947738383};
+		Integer[] checksort = {12}; //13 /12
+		//Integer[] unsorted = {5, 1, 13, 4, 11, 2, 14, 7};
+		Integer[] unsorted = {5, 1, 13, 4, 11, 2, 14, 7, 230, 150, 254, 80, 46, 65, 255, 65534, 65570, 144858484, 947738383};
 		Random rand = new Random();
-		int randnum = 1000000; //10000000
-		unsorted = new int[randnum];
+		int randnum = 100000000;
+		unsorted = new Integer[randnum];
 		for (int i=0;i<randnum;i++) {
 			unsorted[i] = rand.nextInt(0, Integer.MAX_VALUE);
 		}
-		int[] systemsort = Arrays.copyOf(unsorted, unsorted.length);
+		Integer[] systemsort = Arrays.copyOf(unsorted, unsorted.length);
 		long systemstart = System.currentTimeMillis();
 		Arrays.sort(systemsort);
 		long systemend = System.currentTimeMillis();
@@ -74,9 +74,24 @@ public class TreeMapSort {
 		long treegetvaluesdelta = treegetvaluesend - treegetvaluesstart;
 		System.out.print("treegetvdelta="+treegetvaluesdelta+"ms:");
 		for (Iterator<Integer> e=treevalues.iterator();e.hasNext();) {
+			Integer treevaluenext = e.next();
 			//System.out.print(" "+e.next());
 		}
 		System.out.println();
+		treesort = null;
+		MergeSort<Integer> mergesort = new MergeSort<Integer>(unsorted);
+		long mergesortstart = System.currentTimeMillis();
+		LinkedList<Integer> mergesortedlist = mergesort.sort();
+		long mergesortend = System.currentTimeMillis();
+		long mergesortdelta = mergesortend - mergesortstart;
+		System.out.print("mergesortdelta="+mergesortdelta+"ms:");
+		Integer[] mergesorted = mergesortedlist.toArray(new Integer[mergesortedlist.size()]);
+		for (int i=0;i<mergesorted.length;i++) {
+			Integer mergevalue = mergesorted[i];
+			//System.out.print(" "+mergevalue);
+		}
+		System.out.println();
+		System.out.println("exit");
 	}
 
 }
