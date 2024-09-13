@@ -1,2 +1,8 @@
 # javaradixbinarytreesort
-Radix binary tree sort implemented in Java
+Radix binary tree sort and merge sort implemented in Java.
+Compared to Arrays.sort default sort implementation run times.
+
+Test conditions: 100 000 000 random integers in a flat array.
+Arrays.sort took 57 seconds.
+BinaryTree took 162 seconds.
+MergeSort took 153 seconds.
