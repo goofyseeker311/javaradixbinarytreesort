@@ -119,14 +119,24 @@ public class TreeMapSort {
 			System.out.print(" "+hashtreeints[i]+"="+hashtreevalue);
 		}
 		System.out.println();
-		hashtree.remove(removehashint[0]);
+		String removetest = hashtree.remove(removehashint[0]);
+		if (removetest!=null) {
+			System.out.println("removing: "+removehashint[0]+":"+removetest);
+		} else {
+			System.out.println("not removing: "+removehashint[0]);
+		}
 		System.out.print("get:");
 		for (int i=0;i<hashtreeints.length;i++) {
 			String hashtreevalue = hashtree.get(hashtreeints[i]);
 			System.out.print(" "+hashtreeints[i]+"="+hashtreevalue);
 		}
 		System.out.println();
-		hashtree.remove(checkhashint[0]);
+		String removecheck = hashtree.remove(checkhashint[0]);
+		if (removecheck!=null) {
+			System.out.println("removing: "+checkhashint[0]+":"+removecheck);
+		} else {
+			System.out.println("not removing: "+checkhashint[0]);
+		}
 		System.out.print("get:");
 		for (int i=0;i<hashtreeints.length;i++) {
 			String hashtreevalue = hashtree.get(hashtreeints[i]);
