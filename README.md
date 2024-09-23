@@ -1,9 +1,9 @@
-# Java Radix Binary Tree Sort and Merge Sort
+# Java Radix Binary Tree Sort, Radix Binary Hash Tree and Merge Sort
 
-Radix binary tree sort and merge sort implemented in Java.
+Radix binary tree sort, radix binary hash tree and merge sort implemented in Java.
 Implementations compared to the default Arrays.sort sort run times.
 BinaryTree and MergeSort are not optimized in code.
-BinaryTree is a map which uses key-value mappings.
+BinaryTree and HashTree are key-value mappings.
 
 Test conditions: 1K/1M/100M random non-negative integers in a flat array.
 For binary tree, integers are pre-converted to byte arrays.
