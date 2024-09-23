@@ -4,12 +4,20 @@ import java.util.LinkedList;
 
 public class BinaryTree<V> {
 	private BinaryTreeNode rootnode = new BinaryTreeNode();
+
+	public static class KeyValue<V> {
+		public KeyValue(byte[] keyi, V valuei) {
+			this.key = keyi;
+			this.value = valuei;
+		}
+		public byte[] key = null;
+		public V value = null;
+	}
 	
 	private class BinaryTreeNode {
 		public BinaryTreeNode nodezero = null;
 		public BinaryTreeNode nodeone = null;
-		public byte[] key = null;
-		public LinkedList<V> value = null;
+		public LinkedList<KeyValue<V>> keyvalues = null;
 	}
 	
 	public void put(byte[] keyi, V valuei) {
@@ -33,16 +41,13 @@ public class BinaryTree<V> {
 				currentnode = nextnode;
 			}
 		}
-		LinkedList<V> newvalue = currentnode.value;
-		if (newvalue==null) {
-			currentnode.key = keyi.clone();
-			newvalue = new LinkedList<V>();
+		if (currentnode.keyvalues==null) {
+			currentnode.keyvalues = new LinkedList<KeyValue<V>>();
 		}
-		newvalue.add(valuei);
-		currentnode.value = newvalue;
+		currentnode.keyvalues.add(new KeyValue<V>(keyi, valuei));
 	}
 	
-	public LinkedList<V> get(byte[] keyi) {
+	public LinkedList<KeyValue<V>> get(byte[] keyi) {
 		BinaryTreeNode currentnode = this.rootnode;
 		boolean notfound = false;
 		for (int j=keyi.length-1;(j>=0)&&(!notfound);j--) {
@@ -66,39 +71,17 @@ public class BinaryTree<V> {
 				}
 			}
 		}
-		LinkedList<V> newvalue = currentnode.value;
-		return newvalue;
+		return currentnode.keyvalues;
 	}
 	
-	public LinkedList<byte[]> getKeys() {
-		LinkedList<byte[]> newkeys = new LinkedList<byte[]>();
+	public LinkedList<KeyValue<V>> getKeyValues() {
+		LinkedList<KeyValue<V>> newkeys = new LinkedList<KeyValue<V>>();
 		LinkedList<BinaryTreeNode> dfsearch = new LinkedList<BinaryTreeNode>();
 		dfsearch.add(this.rootnode);
 		while (dfsearch.size()>0) {
 			BinaryTreeNode dfsearchnode = dfsearch.removeFirst();
-			if (dfsearchnode.value!=null) {
-				for (int i=0;i<dfsearchnode.value.size();i++) {
-					newkeys.add(dfsearchnode.key);
-				}
-			}
-			if (dfsearchnode.nodeone!=null) {
-				dfsearch.addFirst(dfsearchnode.nodeone);
-			}
-			if (dfsearchnode.nodezero!=null) {
-				dfsearch.addFirst(dfsearchnode.nodezero);
-			}
-		}
-		return newkeys;
-	}
-	
-	public LinkedList<V> getValues() {
-		LinkedList<V> newkeys = new LinkedList<V>();
-		LinkedList<BinaryTreeNode> dfsearch = new LinkedList<BinaryTreeNode>();
-		dfsearch.add(this.rootnode);
-		while (dfsearch.size()>0) {
-			BinaryTreeNode dfsearchnode = dfsearch.removeFirst();
-			if (dfsearchnode.value!=null) {
-				newkeys.addAll(dfsearchnode.value);
+			if (dfsearchnode.keyvalues!=null) {
+				newkeys.addAll(dfsearchnode.keyvalues);
 			}
 			if (dfsearchnode.nodeone!=null) {
 				dfsearch.addFirst(dfsearchnode.nodeone);
