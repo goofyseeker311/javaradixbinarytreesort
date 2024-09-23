@@ -5,8 +5,8 @@ import java.util.LinkedList;
 public class BinaryTree<V> {
 	private BinaryTreeNode rootnode = new BinaryTreeNode();
 
-	public static class KeyValue<V> {
-		public KeyValue(byte[] keyi, V valuei) {
+	public static class ByteValue<V> {
+		public ByteValue(byte[] keyi, V valuei) {
 			this.key = keyi;
 			this.value = valuei;
 		}
@@ -17,7 +17,7 @@ public class BinaryTree<V> {
 	private class BinaryTreeNode {
 		public BinaryTreeNode nodezero = null;
 		public BinaryTreeNode nodeone = null;
-		public LinkedList<KeyValue<V>> keyvalues = null;
+		public LinkedList<ByteValue<V>> keyvalues = null;
 	}
 	
 	public void put(byte[] keyi, V valuei) {
@@ -42,12 +42,12 @@ public class BinaryTree<V> {
 			}
 		}
 		if (currentnode.keyvalues==null) {
-			currentnode.keyvalues = new LinkedList<KeyValue<V>>();
+			currentnode.keyvalues = new LinkedList<ByteValue<V>>();
 		}
-		currentnode.keyvalues.add(new KeyValue<V>(keyi, valuei));
+		currentnode.keyvalues.add(new ByteValue<V>(keyi, valuei));
 	}
 	
-	public LinkedList<KeyValue<V>> get(byte[] keyi) {
+	public LinkedList<ByteValue<V>> get(byte[] keyi) {
 		BinaryTreeNode currentnode = this.rootnode;
 		boolean notfound = false;
 		for (int j=keyi.length-1;(j>=0)&&(!notfound);j--) {
@@ -74,8 +74,8 @@ public class BinaryTree<V> {
 		return currentnode.keyvalues;
 	}
 	
-	public LinkedList<KeyValue<V>> getKeyValues() {
-		LinkedList<KeyValue<V>> newkeys = new LinkedList<KeyValue<V>>();
+	public LinkedList<ByteValue<V>> getAll() {
+		LinkedList<ByteValue<V>> newkeys = new LinkedList<ByteValue<V>>();
 		LinkedList<BinaryTreeNode> dfsearch = new LinkedList<BinaryTreeNode>();
 		dfsearch.add(this.rootnode);
 		while (dfsearch.size()>0) {
