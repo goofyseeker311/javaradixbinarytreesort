@@ -9,10 +9,12 @@ public class SortTest {
 	
 	public void run() {
 		int len = 30000000, max = Integer.MAX_VALUE;
+		//int len = 10, max = 100;
 		Integer[] array = new Integer[len];
 		for (int i=0;i<len;i++) {array[i] = rand.nextInt(max);}
 		Integer[] array2 = array.clone();
 		System.out.println("Items: "+len);
+		//System.out.print("array:"); for (int i=0;i<array.length;i++) {System.out.print(" "+array[i]);} System.out.println();
 		
 		BinaryTreeMap<Integer,Integer> datatreemap = new BinaryTreeMap<Integer,Integer>();
 		long st = System.nanoTime();
@@ -28,9 +30,10 @@ public class SortTest {
 		long td2 = et2-st2;
 		float tt2 = ((float)td2) / 1000000.0f;
 		float itemsec2 = ((float)len)*(1000.0f/tt2)*(1.0f/1000000.0f);
+		//System.out.print("array2:"); for (int i=0;i<array2.length;i++) {System.out.print(" "+array2[i]);} System.out.println();
 		System.out.println("radix binary hash tree map put: "+String.format("%.4f", tt)+"ms: "+itemsec+" Mitems/s.");
 		System.out.println("radix binary hash tree map get: "+String.format("%.4f", tt2)+"ms: "+itemsec2+" Mitems/s.");
-	}
+}
 	
 	public static void main(String[] args) {
 		System.out.println("init.");

@@ -24,7 +24,10 @@ public class BinaryTreeMap<T,V> {
 				node = node.one;
 			}
 		}
-		node.data = new KeyValue<T,V>(key, value);
+		if (node.data==null) {
+			node.data = new ArrayList<KeyValue<T,V>>();
+		}
+		node.data.add(new KeyValue<T,V>(key, value));
 	}
 	public void addAll(T[] keys, V[] values) {
 		for (int i=0;i<keys.length;i++) {
@@ -54,7 +57,12 @@ public class BinaryTreeMap<T,V> {
 			}
 		}
 		if ((node!=null)&&(node.data!=null)) {
-			k = node.data.value;
+			for (int i=0;(i<node.data.size())&&(k==null);i++) {
+				KeyValue<T,V> kv = node.data.get(i);
+				if (kv.key==key) {
+					k = kv.value;
+				}
+			}
 		}
 		return k;
 	}
@@ -65,7 +73,9 @@ public class BinaryTreeMap<T,V> {
 		while (!nodes.isEmpty()) {
 			BinaryTreeNode<T,V> node = nodes.removeFirst();
 			if (node.data!=null) {
-				k.add(node.data.key);
+				for (int i=0;i<node.data.size();i++) {
+					k.add(node.data.get(i).key);
+				}
 			}
 			if (node.one!=null) {
 				nodes.addFirst(node.one);
@@ -84,7 +94,9 @@ public class BinaryTreeMap<T,V> {
 		while (!nodes.isEmpty()) {
 			BinaryTreeNode<T,V> node = nodes.removeFirst();
 			if (node.data!=null) {
-				k.add(node.data.value);
+				for (int i=0;i<node.data.size();i++) {
+					k.add(node.data.get(i).value);
+				}
 			}
 			if (node.one!=null) {
 				nodes.addFirst(node.one);
@@ -96,7 +108,8 @@ public class BinaryTreeMap<T,V> {
 		return k;
 	}
 	
-	public void remove(T key) {
+	public V remove(T key) {
+		V k = null;
 		int hash = key.hashCode();
 		BinaryTreeNode<T,V> node = root;
 		for (int i=0;(i<32)&&(node!=null);i++) {
@@ -113,6 +126,12 @@ public class BinaryTreeMap<T,V> {
 			}
 		}
 		if (node.data!=null) {
+			for (int i=0;(i<node.data.size())&&(k==null);i++) {
+				KeyValue<T,V> kv = node.data.get(i);
+				if (kv.key==key) {
+					k = kv.value;
+				}
+			}
 			node.data = null;
 			int i = 31;
 			while ((node.parent!=null)&&(node.zero==null)&&(node.one==null)&&(node.data==null)) {
@@ -125,6 +144,7 @@ public class BinaryTreeMap<T,V> {
 				i--;
 			}
 		}
+		return k;
 	}
 	public void removeAll() {
 		root = new BinaryTreeNode<T,V>();
@@ -134,7 +154,7 @@ public class BinaryTreeMap<T,V> {
 		BinaryTreeNode<T,V> parent = null;
 		BinaryTreeNode<T,V> zero = null;
 		BinaryTreeNode<T,V> one = null;
-		KeyValue<T,V> data = null;
+		ArrayList<KeyValue<T,V>> data = null;
 	}
 	
 	public static class KeyValue<T,V> {
