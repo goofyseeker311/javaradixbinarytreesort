@@ -2,33 +2,29 @@ package fi.jkauppa.treemap;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.TreeMap;
 
 public class BinaryTreeMap<T,V> {
-	BinaryNode<T,V> root = new BinaryNode<T,V>();
+	BinaryTreeNode<T,V> root = new BinaryTreeNode<T,V>();
 	
 	public void add(T key, V value) {
 		int hash = key.hashCode();
-		BinaryNode<T,V> node = root;
+		BinaryTreeNode<T,V> node = root;
 		for (int i=0;i<32;i++) {
 			if ((hash&(1<<(31-i)))==0) {
 				if (node.zero==null) {
-					node.zero = new BinaryNode<T,V>();
+					node.zero = new BinaryTreeNode<T,V>();
 					node.zero.parent = node;
 				}
 				node = node.zero;
 			} else {
 				if (node.one==null) {
-					node.one = new BinaryNode<T,V>();
+					node.one = new BinaryTreeNode<T,V>();
 					node.one.parent = node;
 				}
 				node = node.one;
 			}
 		}
-		if (node.data==null) {
-			node.data = new TreeMap<T,V>();
-		}
-		node.data.put(key, value);
+		node.data = new KeyValue<T,V>(key, value);
 	}
 	public void addAll(T[] keys, V[] values) {
 		for (int i=0;i<keys.length;i++) {
@@ -39,7 +35,7 @@ public class BinaryTreeMap<T,V> {
 	public V get(T key) {
 		V k = null;
 		int hash = key.hashCode();
-		BinaryNode<T,V> node = root;
+		BinaryTreeNode<T,V> node = root;
 		for (int i=0;(i<32)&&(node!=null);i++) {
 			if ((hash&(1<<(31-i)))==0) {
 				if (node.zero==null) {
@@ -58,18 +54,37 @@ public class BinaryTreeMap<T,V> {
 			}
 		}
 		if ((node!=null)&&(node.data!=null)) {
-			k = node.data.get(key);
+			k = node.data.value;
 		}
 		return k;
 	}
 	public ArrayList<T> getKeys() {
 		ArrayList<T> k = new ArrayList<T>();
-		LinkedList<BinaryNode<T,V>> nodes = new LinkedList<BinaryNode<T,V>>();
+		LinkedList<BinaryTreeNode<T,V>> nodes = new LinkedList<BinaryTreeNode<T,V>>();
 		nodes.add(root);
 		while (!nodes.isEmpty()) {
-			BinaryNode<T,V> node = nodes.removeFirst();
+			BinaryTreeNode<T,V> node = nodes.removeFirst();
 			if (node.data!=null) {
-				k.addAll(node.data.keySet());
+				k.add(node.data.key);
+			}
+			if (node.one!=null) {
+				nodes.addFirst(node.one);
+			}
+			if (node.zero!=null) {
+				nodes.addFirst(node.zero);
+			}
+		}
+		return k;
+	}
+
+	public ArrayList<V> getValues() {
+		ArrayList<V> k = new ArrayList<V>();
+		LinkedList<BinaryTreeNode<T,V>> nodes = new LinkedList<BinaryTreeNode<T,V>>();
+		nodes.add(root);
+		while (!nodes.isEmpty()) {
+			BinaryTreeNode<T,V> node = nodes.removeFirst();
+			if (node.data!=null) {
+				k.add(node.data.value);
 			}
 			if (node.one!=null) {
 				nodes.addFirst(node.one);
@@ -83,7 +98,7 @@ public class BinaryTreeMap<T,V> {
 	
 	public void remove(T key) {
 		int hash = key.hashCode();
-		BinaryNode<T,V> node = root;
+		BinaryTreeNode<T,V> node = root;
 		for (int i=0;(i<32)&&(node!=null);i++) {
 			if ((hash&(1<<(31-i)))==0) {
 				if (node.zero==null) {
@@ -98,10 +113,7 @@ public class BinaryTreeMap<T,V> {
 			}
 		}
 		if (node.data!=null) {
-			node.data.remove(key);
-			if (node.data.isEmpty()) {
-				node.data = null;
-			}
+			node.data = null;
 			int i = 31;
 			while ((node.parent!=null)&&(node.zero==null)&&(node.one==null)&&(node.data==null)) {
 				if ((hash&(1<<(31-i)))==0) {
@@ -115,13 +127,21 @@ public class BinaryTreeMap<T,V> {
 		}
 	}
 	public void removeAll() {
-		root = new BinaryNode<T,V>();
+		root = new BinaryTreeNode<T,V>();
 	}
 	
-	public static class BinaryNode<T,V> {
-		BinaryNode<T,V> parent = null;
-		BinaryNode<T,V> zero = null;
-		BinaryNode<T,V> one = null;
-		TreeMap<T,V> data = null;
+	public static class BinaryTreeNode<T,V> {
+		BinaryTreeNode<T,V> parent = null;
+		BinaryTreeNode<T,V> zero = null;
+		BinaryTreeNode<T,V> one = null;
+		KeyValue<T,V> data = null;
 	}
+	
+	public static class KeyValue<T,V> {
+		public KeyValue() {}
+		public KeyValue(T vkey, V vvalue) {key=vkey;value=vvalue;}
+		public T key = null;
+		public V value = null;
+	}
+	
 }
