@@ -6,6 +6,6 @@ Test conditions: 30M random non-negative integers in a flat array.
 
 ```
 5800X single-thread/auto-vectorization
-BinaryTreeMap PUT:  60.2s  0.5Mitems/s
-BinaryTreeMap GET:   6.5s  4.6Mitems/s
+BinaryTreeMap PUT:  32.2s  0.93Mitems/s
+BinaryTreeMap GET:   5.9s  5.09Mitems/s
 ```
