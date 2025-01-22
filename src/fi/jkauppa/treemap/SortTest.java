@@ -21,7 +21,7 @@ public class SortTest {
 		BinaryTreeMap<Integer,Integer> datatreemap = new BinaryTreeMap<Integer,Integer>();
 		long st = System.nanoTime();
 		for (int i=0;i<len;i++) {
-			datatreemap.add(array[i],array[i]);
+			datatreemap.add(array[i],i);
 		}
 		long et = System.nanoTime();
 		long td = et-st;
@@ -38,7 +38,7 @@ public class SortTest {
 		float itemsec2 = ((float)len)*(1000.0f/tt2)*(1.0f/1000000.0f);
 		
 		long st3 = System.nanoTime();
-		ArrayList<Integer> keys = datatreemap.getKeys();
+		ArrayList<Integer> keys = datatreemap.getValues();
 		array2 = keys.toArray(new Integer[keys.size()]);
 		long et3 = System.nanoTime();
 		long td3 = et3-st3;
@@ -52,7 +52,7 @@ public class SortTest {
 }
 
 	public static void main(String[] args) {
-		System.out.println("SortTest v0.0.3");
+		System.out.println("SortTest v0.0.4");
 		int re = 10000000;
 		try {re = Integer.parseInt(args[0]);} catch(Exception ex) {}
 		SortTest app = new SortTest(re);
