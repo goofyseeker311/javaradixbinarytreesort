@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SortTest {
-	Random rand = new Random();
-	public SortTest() {}
+	private Random rand = new Random();
+	private int len = 0, max = Integer.MAX_VALUE;
+	public SortTest(int re) {
+		len = re;
+	}
 	
 	public void run() {
-		int len = 30000000, max = Integer.MAX_VALUE;
-		//int len = 10, max = 100;
+		System.out.println("init.");
 		Integer[] array = new Integer[len];
 		for (int i=0;i<len;i++) {array[i] = rand.nextInt(max);}
 		Integer[] array2 = array.clone();
@@ -31,14 +33,16 @@ public class SortTest {
 		float tt2 = ((float)td2) / 1000000.0f;
 		float itemsec2 = ((float)len)*(1000.0f/tt2)*(1.0f/1000000.0f);
 		//System.out.print("array2:"); for (int i=0;i<array2.length;i++) {System.out.print(" "+array2[i]);} System.out.println();
-		System.out.println("radix binary hash tree map put: "+String.format("%.4f", tt)+"ms: "+itemsec+" Mitems/s.");
-		System.out.println("radix binary hash tree map get: "+String.format("%.4f", tt2)+"ms: "+itemsec2+" Mitems/s.");
+		System.out.println("radix binary hash tree map add: "+String.format("%.4f", tt).replace(",", ".")+"ms: "+itemsec+" Mitems/s.");
+		System.out.println("radix binary hash tree map get: "+String.format("%.4f", tt2).replace(",", ".")+"ms: "+itemsec2+" Mitems/s.");
+		System.out.println("exit.");
 }
 	
 	public static void main(String[] args) {
-		System.out.println("init.");
-		SortTest app = new SortTest();
+		System.out.println("SortTest v0.0.2");
+		int re = 10000000;
+		try {re = Integer.parseInt(args[0]);} catch(Exception ex) {}
+		SortTest app = new SortTest(re);
 		app.run();
-		System.out.println("exit.");
 	}
 }
