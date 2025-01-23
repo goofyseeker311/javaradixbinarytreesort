@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class BinaryTreeMap<T,V> {
 	BinaryTreeNode<T,V> root = new BinaryTreeNode<T,V>();
 	
-	public void add(T key, V value) {
+	public void put(T key, V value) {
 		int hash = key.hashCode();
 		BinaryTreeNode<T,V> node = root;
 		for (int i=0;i<32;i++) {
@@ -27,11 +27,22 @@ public class BinaryTreeMap<T,V> {
 		if (node.data==null) {
 			node.data = new ArrayList<KeyValue<T,V>>();
 		}
-		node.data.add(new KeyValue<T,V>(key, value));
+		KeyValue<T,V> k = null;
+		for (int i=0;(i<node.data.size())&&(k==null);i++) {
+			KeyValue<T,V> kv = node.data.get(i);
+			if (kv.key==key) {
+				k = kv;
+			}
+		}
+		if (k==null) {
+			node.data.add(new KeyValue<T,V>(key, value));
+		} else {
+			k.value = value;
+		}
 	}
-	public void addAll(T[] keys, V[] values) {
+	public void putAll(T[] keys, V[] values) {
 		for (int i=0;i<keys.length;i++) {
-			add(keys[i],values[i]);
+			put(keys[i],values[i]);
 		}
 	}
 	

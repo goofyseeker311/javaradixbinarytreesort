@@ -16,7 +16,7 @@ public class SortTest {
 	public void run() {
 		System.out.println("init.");
 		Integer[] array = new Integer[len];
-		for (int i=0;i<len;i++) {array[i] = rand.nextInt(max);}
+		for (int i=0;i<len;i++) {array[i] = new Integer(rand.nextInt(max));}
 		Integer[] array2 = array.clone();
 		System.out.println("Items: "+len);
 		//System.out.print("array:"); for (int i=0;i<array.length;i++) {System.out.print(" "+array[i]);} System.out.println();
@@ -24,7 +24,7 @@ public class SortTest {
 		BinaryTreeMap<Integer,Integer> datatreemap = new BinaryTreeMap<Integer,Integer>();
 		long st = System.nanoTime();
 		for (int i=0;i<len;i++) {
-			datatreemap.add(array[i],i);
+			datatreemap.put(array[i],i);
 		}
 		long et = System.nanoTime();
 		long td = et-st;
@@ -46,9 +46,9 @@ public class SortTest {
 		float tt3 = ((float)td3) / 1000000.0f;
 		float itemsec3 = ((float)len)*(1000.0f/tt3)*(1.0f/1000000.0f);
 		//System.out.print("array2:"); for (int i=0;i<array2.length;i++) {System.out.print(" "+array2[i]);} System.out.println();
-		System.out.println("radix binary hash tree map add: "+String.format("%.4f", tt).replace(",", ".")+"ms: "+itemsec+" Mitems/s.");
-		System.out.println("radix binary hash tree map get: "+String.format("%.4f", tt2).replace(",", ".")+"ms: "+itemsec2+" Mitems/s.");
-		System.out.println("radix binary hash tree map all: "+String.format("%.4f", tt3).replace(",", ".")+"ms: "+itemsec3+" Mitems/s.");
+		System.out.println("binary map put: "+String.format("%.4f", tt).replace(",", ".")+"ms: "+itemsec+" Mitems/s.");
+		System.out.println("binary map get: "+String.format("%.4f", tt2).replace(",", ".")+"ms: "+itemsec2+" Mitems/s.");
+		System.out.println("binary map all: "+String.format("%.4f", tt3).replace(",", ".")+"ms: "+itemsec3+" Mitems/s.");
 
 		Hashtable<Integer,Integer> hashtable = new Hashtable<Integer,Integer>(); 
 		long st4 = System.nanoTime();
@@ -74,7 +74,7 @@ public class SortTest {
 		long td6 = et6-st6;
 		float tt6 = ((float)td6) / 1000000.0f;
 		float itemsec6 = ((float)len)*(1000.0f/tt6)*(1.0f/1000000.0f);
-		System.out.println("hash table add: "+String.format("%.4f", tt4).replace(",", ".")+"ms: "+itemsec4+" Mitems/s.");
+		System.out.println("hash table put: "+String.format("%.4f", tt4).replace(",", ".")+"ms: "+itemsec4+" Mitems/s.");
 		System.out.println("hash table get: "+String.format("%.4f", tt5).replace(",", ".")+"ms: "+itemsec5+" Mitems/s.");
 		System.out.println("hash table all: "+String.format("%.4f", tt6).replace(",", ".")+"ms: "+itemsec6+" Mitems/s.");
 		
@@ -102,7 +102,7 @@ public class SortTest {
 		long td9 = et9-st9;
 		float tt9 = ((float)td9) / 1000000.0f;
 		float itemsec9 = ((float)len)*(1000.0f/tt9)*(1.0f/1000000.0f);
-		System.out.println("tree map add: "+String.format("%.4f", tt7).replace(",", ".")+"ms: "+itemsec7+" Mitems/s.");
+		System.out.println("tree map put: "+String.format("%.4f", tt7).replace(",", ".")+"ms: "+itemsec7+" Mitems/s.");
 		System.out.println("tree map get: "+String.format("%.4f", tt8).replace(",", ".")+"ms: "+itemsec8+" Mitems/s.");
 		System.out.println("tree map all: "+String.format("%.4f", tt9).replace(",", ".")+"ms: "+itemsec9+" Mitems/s.");
 		
@@ -110,7 +110,7 @@ public class SortTest {
 }
 
 	public static void main(String[] args) {
-		System.out.println("SortTest v0.0.5");
+		System.out.println("SortTest v0.0.6");
 		int re = 10000000;
 		try {re = Integer.parseInt(args[0]);} catch(Exception ex) {}
 		SortTest app = new SortTest(re);
